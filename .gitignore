@@ -1,0 +1,14 @@
+# Binaries
+/mockpay
+/mockpay.exe
+*.test
+*.out
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Local mock state that might accidentally land in the repo during dev
+state.json
+*.mockpay.json
