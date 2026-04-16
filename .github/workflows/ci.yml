@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-test:
-    name: build + vet + test
+    name: build + vet + test (unit)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,5 +23,64 @@ jobs:
       - name: go vet
         run: go vet ./...
 
+      # -shuffle=on surfaces order-dependent tests immediately.
+      # -coverpkg=./... makes the CLI integration test contribute coverage to
+      # the engine/provider/store packages it exercises, so the headline
+      # number reflects reality rather than just each package's own tests.
       - name: go test
-        run: go test ./... -race -count=1
+        run: |
+          go test ./... \
+            -race \
+            -count=1 \
+            -shuffle=on \
+            -coverprofile=coverage.out \
+            -coverpkg=./internal/...
+
+      - name: coverage report
+        run: go tool cover -func=coverage.out | tail -20
+
+      # Coverage gate: fail CI if total drops below the threshold. Bump this
+      # up as coverage improves — ratcheting prevents silent regressions.
+      - name: coverage gate (>= 85%)
+        run: |
+          total=$(go tool cover -func=coverage.out | awk '/^total:/ {gsub("%","",$3); print $3}')
+          echo "total coverage: ${total}%"
+          awk -v t="$total" 'BEGIN { exit (t+0 < 85) ? 1 : 0 }'
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage.out
+
+  e2e:
+    name: subprocess e2e (-tags=e2e)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+          cache: true
+
+      - name: e2e tests
+        run: go test -tags=e2e -count=1 ./e2e/...
+
+  fuzz-smoke:
+    name: fuzz smoke (10s per fuzzer)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+          cache: true
+
+      # Short fuzz budget so CI stays fast. The real value is replaying any
+      # saved corpus from past failures, which happens on every `go test`.
+      - name: FuzzParseOutcome (10s)
+        run: go test -run='^$' -fuzz=FuzzParseOutcome -fuzztime=10s ./internal/engine/...
+      - name: FuzzStateLoad (10s)
+        run: go test -run='^$' -fuzz=FuzzStateLoad -fuzztime=10s ./internal/store/...

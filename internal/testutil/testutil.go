@@ -5,7 +5,6 @@
 package testutil
 
 import (
-	"encoding/json"
 	"path/filepath"
 	"testing"
 	"time"
@@ -33,30 +32,4 @@ func NewEngine(t *testing.T) *engine.Engine {
 	e.Now = func() time.Time { return time.Unix(1700000000, 0) }
 	engine.Sleeper = func(time.Duration) {}
 	return e
-}
-
-// MustCreateCustomer creates a customer and returns it, failing the test on
-// error. Handy for seeding fixtures across many tests.
-func MustCreateCustomer(t *testing.T, e *engine.Engine, email string) store.Customer {
-	t.Helper()
-	c, err := e.CreateCustomer(engine.CreateCustomerParams{Email: email, Name: "Test " + email})
-	require.NoError(t, err)
-	return c
-}
-
-// MustCharge creates a successful charge against the customer and returns the
-// persisted Charge record.
-func MustCharge(t *testing.T, e *engine.Engine, cus string, amount int64) store.Charge {
-	t.Helper()
-	r, err := e.Charge(engine.ChargeParams{Amount: amount, Currency: "usd", Customer: cus})
-	require.NoError(t, err)
-	return r.Charge
-}
-
-// DecodeJSON unmarshals b into a generic map. Fails the test on error.
-func DecodeJSON(t *testing.T, b []byte) map[string]any {
-	t.Helper()
-	var out map[string]any
-	require.NoError(t, json.Unmarshal(b, &out))
-	return out
 }

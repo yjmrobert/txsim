@@ -1,0 +1,40 @@
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck       # unchecked errors
+    - govet          # static analysis (shadow, printf, etc.)
+    - ineffassign    # unused assignments
+    - staticcheck    # comprehensive checks (SA*, ST*, QF*)
+    - unused         # unused vars/funcs/types
+    - gofmt          # formatting
+    - goimports      # import ordering
+    - misspell       # common typos in comments
+    - unconvert      # redundant type conversions
+    - revive         # stylistic issues
+
+linters-settings:
+  goimports:
+    local-prefixes: github.com/yjmrobert/txsim
+  revive:
+    rules:
+      - name: var-naming
+      - name: package-comments
+      - name: error-return
+      - name: error-strings
+      - name: unexported-return
+
+issues:
+  exclude-rules:
+    # Test files intentionally ignore some errors in setup/teardown.
+    - path: _test\.go
+      linters:
+        - errcheck
+        - revive
+    # Example functions don't need a package comment.
+    - path: example_test\.go
+      linters:
+        - revive
