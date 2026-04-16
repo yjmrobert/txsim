@@ -1,0 +1,5 @@
+{
+  "code": "card_declined",
+  "message": "Your card was declined.",
+  "type": "error"
+}

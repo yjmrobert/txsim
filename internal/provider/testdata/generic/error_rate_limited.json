@@ -1,0 +1,5 @@
+{
+  "code": "rate_limited",
+  "message": "Too many requests made to the API too quickly.",
+  "type": "error"
+}

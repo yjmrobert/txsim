@@ -1,0 +1,11 @@
+{
+  "created": 1700000000,
+  "customer": "cus_golden",
+  "id": "sub_golden",
+  "object": "subscription",
+  "plan": {
+    "id": "gold",
+    "object": "plan"
+  },
+  "status": "active"
+}

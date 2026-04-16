@@ -1,0 +1,27 @@
+{
+  "amount": 500,
+  "amount_refunded": 0,
+  "captured": false,
+  "created": 1700000000,
+  "currency": "usd",
+  "customer": "cus_golden",
+  "description": null,
+  "failure_code": "card_declined",
+  "failure_message": "Your card was declined.",
+  "id": "ch_declined",
+  "livemode": false,
+  "object": "charge",
+  "outcome": {
+    "network_status": "declined_by_network",
+    "reason": "card_declined",
+    "risk_level": "normal",
+    "seller_message": "Your card was declined.",
+    "type": "issuer_declined"
+  },
+  "paid": false,
+  "payment_method_types": [
+    "card"
+  ],
+  "refunded": false,
+  "status": "failed"
+}

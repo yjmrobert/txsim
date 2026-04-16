@@ -1,0 +1,11 @@
+{
+  "amount": 500,
+  "created": 1700000000,
+  "currency": "usd",
+  "customer": "cus_golden",
+  "id": "ch_declined",
+  "message": "Your card was declined.",
+  "outcome": "card_declined",
+  "status": "failed",
+  "type": "charge"
+}

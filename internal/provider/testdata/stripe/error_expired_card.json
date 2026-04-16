@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "expired_card",
+    "message": "Your card has expired.",
+    "type": "card_error"
+  }
+}

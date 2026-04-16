@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": "card_declined",
+    "decline_code": "insufficient_funds",
+    "message": "Your card has insufficient funds.",
+    "type": "card_error"
+  }
+}

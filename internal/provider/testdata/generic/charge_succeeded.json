@@ -1,0 +1,10 @@
+{
+  "amount": 2500,
+  "created": 1700000000,
+  "currency": "usd",
+  "customer": "cus_golden",
+  "id": "ch_golden",
+  "outcome": "succeeded",
+  "status": "succeeded",
+  "type": "charge"
+}

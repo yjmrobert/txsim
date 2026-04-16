@@ -1,0 +1,8 @@
+{
+  "amount": 1000,
+  "charge": "ch_golden",
+  "created": 1700000000,
+  "id": "re_golden",
+  "status": "succeeded",
+  "type": "refund"
+}
