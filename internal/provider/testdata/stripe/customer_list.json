@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "created": 1700000000,
+      "email": "golden@example.com",
+      "id": "cus_golden",
+      "name": "Golden",
+      "object": "customer"
+    }
+  ],
+  "has_more": false,
+  "object": "list",
+  "url": "/v1/customers"
+}
